@@ -3,8 +3,8 @@ import re
 
 
 #load data
-a = pd.read_csv(r"News_csv/news_20190318.csv")
-b = pd.read_csv(r"News_csv/news_20190327.csv")
+a = pd.read_csv(r"https://raw.githubusercontent.com/WQD170071/Data-Mining-Project/master/Dataset/Milestone%203/news_20190318.csv")
+b = pd.read_csv(r"https://raw.githubusercontent.com/WQD170071/Data-Mining-Project/master/Dataset/Milestone%203/news_20190327.csv")
 
 #merge data by columns
 merge_news = a.append(b)
