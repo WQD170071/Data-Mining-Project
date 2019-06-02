@@ -1,0 +1,593 @@
+*------------------------------------------------------------*
+* Training Log
+Date:                May 29, 2019
+Time:                15:38:04
+*------------------------------------------------------------*
+10866  proc freq data=EMWS6.Reg2_VariableSet noprint;
+10867  table ROLE*LEVEL/out=WORK.Reg2META;
+10868  run;
+
+NOTE: There were 11 observations read from the data set EMWS6.REG2_VARIABLESET.
+NOTE: The data set WORK.REG2META has 4 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+10869  proc print data=WORK.Reg2META label noobs;
+10870  var ROLE LEVEL COUNT;
+10871  label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+10872  title9 ' ';
+10873  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+10874  run;
+
+NOTE: There were 4 observations read from the data set WORK.REG2META.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10875  title10;
+
+10876  %let EMNORLEN = %DMNORLEN;
+EMWS6.Impt_TRAIN EMWS6.Impt_TRAIN 
+EMWS6.Impt_TRAIN EMWS6.Impt_TRAIN EMWS6 Impt_TRAIN 
+EMWS6.Impt_TRAIN EMWS6.Impt_TRAIN 
+EMWS6.Impt_TRAIN EMWS6.Impt_TRAIN EMWS6 Impt_TRAIN 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+10905  data WORK.Reg2_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+10906  length ORDER $20;
+10907  label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))" EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS = "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+10908     "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER = "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+10909  set EMWS6.IDS3_TARGET_DM( where=(_TYPE_="TARGET"));
+10910  NumLevels=3;
+10911  select(upcase(ORDER));
+10912  when('DESC') ORDER = 'Descending';
+10913  when('ASC') ORDER = 'Ascending';
+10914  when('FMTDESC') ORDER = 'Formatted Descending';
+10915  when('FMTASC') ORDER = 'Formatted Ascending';
+10916  otherwise ORDER = 'Descending';
+10917  end;
+10918  output;
+10919  run;
+
+NOTE: There were 1 observations read from the data set EMWS6.IDS3_TARGET_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.REG2_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+10920  title9 ' ';
+10921  proc print data=WORK.Reg2_EVENT noobs label;
+10922  var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+10923  title9 ' ';
+10924  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+10925  run;
+
+NOTE: There were 1 observations read from the data set WORK.REG2_EVENT.
+NOTE: The PROCEDURE PRINT printed page 2.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10926  title10;
+
+"No decisions defined for target "target"." 
+10927  proc print data = EMWS6.Ids3_target_DM noobs label;
+10928  var _type_ variable label;
+10929  where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+10930  label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))" VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+10931  title9 ' ';
+10932  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+10933  run;
+
+NOTE: There were 9 observations read from the data set EMWS6.IDS3_TARGET_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 3.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10934  title10;
+
+10944  data WORK.M0E66LGW;
+10945  set WORK.M0E66LGW end=eof;
+10946  output;
+10947  if eof then do;
+10948  NAME="";
+10949  ROLE="COST";
+10950  LEVEL="INTERVAL";
+10951  TYPE="N";
+10952  output;
+10953  end;
+10954  run;
+
+NOTE: There were 10 observations read from the data set WORK.M0E66LGW.
+NOTE: The data set WORK.M0E66LGW has 11 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: There were 3 observations read from the data set EMWS6.IDS3_TARGET_DD.
+NOTE: The data set WORK.TARGET has 3 observations and 8 variables.
+NOTE: There were 3 observations read from the data set EMWS6.IDS3_TARGET_DD.
+NOTE: The data set WORK.TARGET has 3 observations and 8 variables.
+10955  *------------------------------------------------------------*;
+10956  * Reg2: Create decision matrix;
+10957  *------------------------------------------------------------*;
+10958  data WORK.target;
+10959    length   target                           $  32
+10960             COUNT                                8
+10961             DATAPRIOR                            8
+10962             TRAINPRIOR                           8
+10963             DECPRIOR                             8
+10964             DECISION1                            8
+10965             DECISION2                            8
+10966             DECISION3                            8
+10967             ;
+10968  
+10969    label    COUNT="Level Counts"
+10970             DATAPRIOR="Data Proportions"
+10971             TRAINPRIOR="Training Proportions"
+10972             DECPRIOR="Decision Priors"
+10973             DECISION1="SELL"
+10974             DECISION2="HOLD"
+10975             DECISION3="BUY"
+10976             ;
+10977    format   COUNT 10.
+10978             ;
+10979  target="SELL"; COUNT=59; DATAPRIOR=0.31891891891891; TRAINPRIOR=0.31891891891891; DECPRIOR=.; DECISION1=1; DECISION2=0; DECISION3=0;
+10980  output;
+10981  target="HOLD"; COUNT=50; DATAPRIOR=0.27027027027027; TRAINPRIOR=0.27027027027027; DECPRIOR=.; DECISION1=0; DECISION2=1; DECISION3=0;
+10982  output;
+10983  target="BUY"; COUNT=76; DATAPRIOR=0.41081081081081; TRAINPRIOR=0.41081081081081; DECPRIOR=.; DECISION1=0; DECISION2=0; DECISION3=1;
+10984  output;
+10985  ;
+10986  run;
+
+NOTE: The data set WORK.TARGET has 3 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10987  proc datasets lib=work nolist;
+10988  modify target(type=PROFIT label=target);
+10989  label DECISION1= 'SELL';
+10990  label DECISION2= 'HOLD';
+10991  label DECISION3= 'BUY';
+10992  run;
+
+NOTE: MODIFY was successful for WORK.TARGET.DATA.
+10993  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10994  data EM_DMREG / view=EM_DMREG;
+10995  set EMWS6.Impt_TRAIN(keep=
+10996  LOG_high LOG_low LOG_open LOG_price REP_volume change code name sentiment
+10997  target );
+10998  run;
+
+NOTE: DATA STEP view saved on file WORK.EM_DMREG.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS6.IMPT_TRAIN.VIEW used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.11 seconds
+      
+
+10999  *------------------------------------------------------------* ;
+11000  * Reg2: DMDBClass Macro ;
+11001  *------------------------------------------------------------* ;
+11002  %macro DMDBClass;
+11003      code(ASC) name(ASC) sentiment(ASC) target(DESC)
+11004  %mend DMDBClass;
+11005  *------------------------------------------------------------* ;
+11006  * Reg2: DMDBVar Macro ;
+11007  *------------------------------------------------------------* ;
+11008  %macro DMDBVar;
+11009      LOG_high LOG_low LOG_open LOG_price REP_volume change
+11010  %mend DMDBVar;
+11011  *------------------------------------------------------------*;
+11012  * Reg2: Create DMDB;
+11013  *------------------------------------------------------------*;
+11014  proc dmdb batch data=WORK.EM_DMREG
+11015  dmdbcat=WORK.Reg2_DMDB
+11016  maxlevel = 513
+11017  ;
+11018  class %DMDBClass;
+11019  var %DMDBVar;
+11020  target
+11021  target
+11022  ;
+11023  run;
+
+NOTE: Records processed = 91   Memory used = 511K.
+NOTE: There were 91 observations read from the data set EMWS6.PART_TRAIN.
+NOTE: There were 91 observations read from the data set EMWS6.TRANS_TRAIN.
+NOTE: View WORK.EM_DMREG.VIEW used (Total process time):
+      real time           0.37 seconds
+      cpu time            0.15 seconds
+      
+NOTE: There were 91 observations read from the data set EMWS6.IMPT_TRAIN.
+NOTE: There were 91 observations read from the data set WORK.EM_DMREG.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.40 seconds
+      cpu time            0.18 seconds
+      
+
+11024  quit;
+11025  *--- end code ---*;
+
+11026  *------------------------------------------------------------*;
+11027  * Reg2: Run DMREG procedure;
+11028  *------------------------------------------------------------*;
+11029  proc dmreg data=EM_DMREG dmdbcat=WORK.Reg2_DMDB
+11030  validata = EMWS6.Impt_VALIDATE
+11031  outest = EMWS6.Reg2_EMESTIMATE
+11032  outterms = EMWS6.Reg2_OUTTERMS
+11033  outmap= EMWS6.Reg2_MAPDS namelen=200
+11034  ;
+11035  class
+11036  target
+11037  code
+11038  name
+11039  sentiment
+11040  ;
+11041  model target =
+11042  LOG_high
+11043  LOG_low
+11044  LOG_open
+11045  LOG_price
+11046  REP_volume
+11047  change
+11048  code
+11049  name
+11050  sentiment
+11051  /level=nominal
+11052  coding=DEVIATION
+11053  nodesignprint
+11054  selection=STEPWISE choose=VMISC
+11055  Hierarchy=CLASS
+11056  Rule=NONE
+11057  ;
+11058  ;
+11059  code file="G:\SASproject\Stock Analysis\Workspaces\EMWS6\Reg2\EMPUBLISHSCORE.sas"
+11060  group=Reg2
+11061  ;
+11062  code file="G:\SASproject\Stock Analysis\Workspaces\EMWS6\Reg2\EMFLOWSCORE.sas"
+11063  group=Reg2
+11064  residual
+11065  ;
+11066  run;
+
+NOTE: Convergence criterion (ABSGCONV=0.00001) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (ABSGCONV=0.00001) satisfied.
+NOTE: External file G:\SASproject\Stock Analysis\Workspaces\EMWS6\Reg2\EMPUBLISHSCORE.sas opened.
+NOTE: External file G:\SASproject\Stock Analysis\Workspaces\EMWS6\Reg2\EMFLOWSCORE.sas opened.
+NOTE: There were 94 observations read from the data set EMWS6.PART_VALIDATE.
+NOTE: View EMWS6.IMPT_VALIDATE.VIEW used (Total process time):
+      real time           0.26 seconds
+      cpu time            0.21 seconds
+      
+NOTE: There were 94 observations read from the data set EMWS6.TRANS_VALIDATE.
+NOTE: There were 91 observations read from the data set EMWS6.PART_TRAIN.
+NOTE: There were 91 observations read from the data set EMWS6.TRANS_TRAIN.
+NOTE: View WORK.EM_DMREG.VIEW used (Total process time):
+      real time           0.32 seconds
+      cpu time            0.28 seconds
+      
+NOTE: There were 91 observations read from the data set EMWS6.IMPT_TRAIN.
+NOTE: There were 91 observations read from the data set WORK.EM_DMREG.
+NOTE: There were 94 observations read from the data set EMWS6.IMPT_VALIDATE.
+NOTE: The data set EMWS6.REG2_EMESTIMATE has 12 observations and 66 variables.
+NOTE: The data set EMWS6.REG2_OUTTERMS has 2 observations and 7 variables.
+NOTE: The data set EMWS6.REG2_MAPDS has 3 observations and 30 variables.
+NOTE: The PROCEDURE DMREG printed pages 4-7.
+NOTE: PROCEDURE DMREG used (Total process time):
+      real time           0.34 seconds
+      cpu time            0.29 seconds
+      
+
+11067  quit;
+
+11068  proc datasets lib=WORK nolist;
+11069  delete Reg2_DMDB;
+11070  run;
+
+NOTE: The file WORK.REG2_DMDB (memtype=DATA) was not found, but appears on a DELETE statement.
+11071  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11072  proc datasets lib=WORK nolist;
+11073  delete Reg2_DMDB / memtype=catalog;
+11074  run;
+
+NOTE: Deleting WORK.REG2_DMDB (memtype=CATALOG).
+11075  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11076  data WORK.ESTIMATE;
+11077  length _NAME_ $32;
+11078  set EMWS6.Reg2_EMESTIMATE;
+11079  drop _AIC_--_VMISC_
+11080  ;
+11081  where _CHOSEN_ ne '' and _TYPE_ in('PARMS', 'T', 'P');
+11082  drop _STEP_ _CHOSEN_;
+11083  select(_TYPE_);
+11084  when('PARMS') _NAME_='Coefficient';
+11085  when('T') _NAME_='tValue';
+11086  when('P') _NAME_='PValue';
+11087  otherwise;
+11088  end;
+11089  run;
+
+NOTE: There were 3 observations read from the data set EMWS6.REG2_EMESTIMATE.
+      WHERE (_CHOSEN_ not = ' ') and _TYPE_ in ('P', 'PARMS', 'T');
+NOTE: The data set WORK.ESTIMATE has 3 observations and 32 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11090  proc transpose data=WORK.ESTIMATE out=WORK.ESTIMATE(rename=(_NAME_=Effect));
+11091  run;
+
+NOTE: There were 3 observations read from the data set WORK.ESTIMATE.
+NOTE: The data set WORK.ESTIMATE has 30 observations and 5 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.00 seconds
+      
+
+11092  proc transpose data=EMWS6.Reg2_MAPDS out=WORK.MAP(rename=(_NAME_=Effect INPUT=Variable
+11093  TARGET=TargetLevel
+11094  ));
+11095  var 'LOG_high_SELL'n--'sentiment0_HOLD'n;
+11096  run;
+
+NOTE: There were 3 observations read from the data set EMWS6.REG2_MAPDS.
+NOTE: The data set WORK.MAP has 28 observations and 5 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11097  proc sort data=WORK.MAP;
+11098  by Effect;
+11099  run;
+
+NOTE: There were 28 observations read from the data set WORK.MAP.
+NOTE: The data set WORK.MAP has 28 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11100  proc sort data=WORK.ESTIMATE;
+11101  by Effect;
+11102  run;
+
+NOTE: There were 30 observations read from the data set WORK.ESTIMATE.
+NOTE: The data set WORK.ESTIMATE has 30 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11103  data EMWS6.Reg2_EFFECTS(rename=(_LABEL_=EffectLabel));
+11104  length Variable ClassLevel $32;
+11105  merge WORK.ESTIMATE WORK.MAP;
+11106  by Effect;
+11107  label Effect = "%sysfunc(sasmsg(sashelp.dmine, rpt_effect_vlabel, NOQUOTE))" Variable = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" Sign = "%sysfunc(sasmsg(sashelp.dmine, rpt_sign_vlabel, NOQUOTE))" ClassLevel =
+11108     "%sysfunc(sasmsg(sashelp.dmine, rpt_level_vlabel, NOQUOTE))" Abscoefficient = "%sysfunc(sasmsg(sashelp.dmine, rpt_abscoefficient_vlabel, NOQUOTE))" Coefficient = "%sysfunc(sasmsg(sashelp.dmine, rpt_coefficient_vlabel, NOQUOTE))" _LABEL_ =
+11109     "%sysfunc(sasmsg(sashelp.dmine, rpt_effectLabel_vlabel, NOQUOTE))" CODE = "%sysfunc(sasmsg(sashelp.dmine, rpt_scorecodevar_vlabel, NOQUOTE))";
+11110  label tvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_tvalue_vlabel,         NOQUOTE))" abstvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_absoluteTvalue_vlabel, NOQUOTE))" PValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_pvalue_vlabel,         NOQUOTE))";
+11111  abstvalue = abs(tValue);
+11112  drop pos;
+11113  length TargetLevel $32;
+WARNING: Length of character variable TargetLevel has already been set. Use the LENGTH statement as the very first statement in the DATA STEP to declare the length of a character variable.
+11114  label TargetLevel = "%sysfunc(sasmsg(sashelp.dmine, rpt_targetLevel_vlabel, NOQUOTE))";
+11115  if index(Effect, 'Intercept') then do;
+11116  variable = 'Intercept';
+11117  TargetLevel = scan(_LABEL_, 2, '=');
+11118  end;
+11119  if ^indexc(variable, '*') then do;
+11120  if length(effect)>length(variable) then classlevel = substr(effect, length(variable)+1);
+11121  pos = index(classlevel, '_'!!TargetLevel);
+11122  if pos> 1 then classlevel = substr(classlevel, 1, pos-1);
+11123  else classlevel = '';
+11124  end;
+11125  if Effect eq '' then Effect = Variable;
+11126  if coefficient < 0 then sign = '-';
+11127  else sign = '+';
+11128  abscoefficient = abs(coefficient);
+11129  if _LABEL_ = '' then _LABEL_ = Effect;
+11130  if coefficient ne . then output;
+11131  run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      28 at 11111:13   28 at 11128:18   
+NOTE: There were 30 observations read from the data set WORK.ESTIMATE.
+NOTE: There were 28 observations read from the data set WORK.MAP.
+NOTE: The data set EMWS6.REG2_EFFECTS has 2 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+11132  proc sort data =EMWS6.Reg2_EFFECTS;
+11133  by
+11134  TargetLevel
+11135  descending abstvalue;
+11136  run;
+
+NOTE: There were 2 observations read from the data set EMWS6.REG2_EFFECTS.
+NOTE: The data set EMWS6.REG2_EFFECTS has 2 observations and 12 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11137  data EMWS6.Reg2_EFFECTS;
+11138  set EMWS6.Reg2_EFFECTS;
+11139  format TEffectNum 3.;
+11140  label TEffectNum = "%sysfunc(sasmsg(sashelp.dmine, rpt_teffectnum_vlabel, NOQUOTE))";
+11141  retain TEffectNum;
+11142  by TargetLevel;
+11143  if first.TargetLevel then TEffectNum =1;
+11144  else TEffectNum + 1;
+11145  run;
+
+NOTE: There were 2 observations read from the data set EMWS6.REG2_EFFECTS.
+NOTE: The data set EMWS6.REG2_EFFECTS has 2 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11146  proc sort data =EMWS6.Reg2_EFFECTS;
+11147  by
+11148  TargetLevel
+11149  descending absCoefficient;
+11150  run;
+
+NOTE: There were 2 observations read from the data set EMWS6.REG2_EFFECTS.
+NOTE: The data set EMWS6.REG2_EFFECTS has 2 observations and 13 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11151  data EMWS6.Reg2_EFFECTS;
+11152  set EMWS6.Reg2_EFFECTS;
+11153  format EffectNum 3.;
+11154  label EffectNum = "%sysfunc(sasmsg(sashelp.dmine, rpt_effectnum_vlabel, NOQUOTE))";
+11155  retain EffectNum;
+11156  by TargetLevel;
+11157  if first.TargetLevel then EffectNum =1;
+11158  else EffectNum + 1;
+11159  run;
+
+NOTE: There were 2 observations read from the data set EMWS6.REG2_EFFECTS.
+NOTE: The data set EMWS6.REG2_EFFECTS has 2 observations and 14 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11160  proc transpose data=EMWS6.Reg2_EMESTIMATE out=EMWS6.Reg2_ESTIMATEGRID(rename=(PARMS=Coefficient T=TValue _NAME_=Effect _LABEL_=EffectLabel));
+11161  where _CHOSEN_ eq '' and _TYPE_ in('PARMS', 'T', 'P');
+11162  var 'LOG_high_SELL'n--'sentiment0_HOLD'n;
+11163  by _STEP_;
+11164  id _TYPE_;
+11165  run;
+
+NOTE: There were 9 observations read from the data set EMWS6.REG2_EMESTIMATE.
+      WHERE (_CHOSEN_=' ') and _TYPE_ in ('P', 'PARMS', 'T');
+NOTE: The data set EMWS6.REG2_ESTIMATEGRID has 84 observations and 6 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11166  proc transpose data=EMWS6.Reg2_MAPDS out=WORK.MAP(rename=(_NAME_=Effect INPUT=Variable
+11167  TARGET=TargetLevel
+11168  ));
+11169  var 'LOG_high_SELL'n--'sentiment0_HOLD'n;
+11170  run;
+
+NOTE: There were 3 observations read from the data set EMWS6.REG2_MAPDS.
+NOTE: The data set WORK.MAP has 28 observations and 5 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11171  proc sort data=WORK.MAP;
+11172  by Effect;
+11173  run;
+
+NOTE: There were 28 observations read from the data set WORK.MAP.
+NOTE: The data set WORK.MAP has 28 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11174  proc sort data=EMWS6.Reg2_ESTIMATEGRID out=WORK.ESTIMATE;
+11175  by Effect;
+11176  run;
+
+NOTE: There were 84 observations read from the data set EMWS6.REG2_ESTIMATEGRID.
+NOTE: The data set WORK.ESTIMATE has 84 observations and 6 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+11177  data EMWS6.Reg2_ESTIMATEGRID(rename=(_LABEL_=EffectLabel));
+11178  merge WORK.ESTIMATE WORK.MAP;
+11179  by Effect;
+11180  run;
+
+WARNING: Variable _LABEL_ cannot be renamed to EffectLabel because EffectLabel already exists.
+NOTE: There were 84 observations read from the data set WORK.ESTIMATE.
+NOTE: There were 28 observations read from the data set WORK.MAP.
+NOTE: The data set EMWS6.REG2_ESTIMATEGRID has 84 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11181  data EMWS6.Reg2_ESTIMATEGRID;
+11182  set EMWS6.Reg2_ESTIMATEGRID;
+11183  if EffectLabel eq '' then EffectLabel = Effect;
+11184  label EffectLabel = "%sysfunc(sasmsg(sashelp.dmine, rpt_effectLabel_vlabel, NOQUOTE))" Effect = "%sysfunc(sasmsg(sashelp.dmine, rpt_effect_vlabel, NOQUOTE))" Abscoefficient = "%sysfunc(sasmsg(sashelp.dmine, rpt_abscoefficient_vlabel, NOQUOTE))"
+11185     Coefficient = "%sysfunc(sasmsg(sashelp.dmine, rpt_coefficient_vlabel, NOQUOTE))" tvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_tvalue_vlabel,         NOQUOTE))" abstvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_absoluteTvalue_vlabel, NOQUOTE))"
+11185! PValue =
+11186     "%sysfunc(sasmsg(sashelp.dmine, rpt_pvalue_vlabel,         NOQUOTE))";
+11187  AbsCoefficient = abs(Coefficient);
+11188  AbsTValue = abs(TValue);
+11189  where coefficient ne .;
+11190  run;
+
+NOTE: Variable PValue is uninitialized.
+NOTE: There were 4 observations read from the data set EMWS6.REG2_ESTIMATEGRID.
+      WHERE coefficient not = .;
+NOTE: The data set EMWS6.REG2_ESTIMATEGRID has 4 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+

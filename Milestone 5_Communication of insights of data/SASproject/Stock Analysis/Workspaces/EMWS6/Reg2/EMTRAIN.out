@@ -1,0 +1,307 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+            Measurement    Frequency
+Role           Level         Count
+
+INPUT        INTERVAL          6    
+INPUT        NOMINAL           3    
+REJECTED     INTERVAL          1    
+TARGET       NOMINAL           1    
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Model Events
+
+                                  Number
+                   Measurement      of
+Target    Event       Level       Levels      Order       Label
+
+target    SELL       NOMINAL         3      Descending         
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Predicted and decision variables
+
+Type         Variable        Label
+
+TARGET       target                                
+PREDICTED    P_targetsell    Predicted: target=sell
+RESIDUAL     R_targetsell    Residual: target=sell 
+PREDICTED    P_targethold    Predicted: target=hold
+RESIDUAL     R_targethold    Residual: target=hold 
+PREDICTED    P_targetbuy     Predicted: target=buy 
+RESIDUAL     R_targetbuy     Residual: target=buy  
+FROM         F_target        From: target          
+INTO         I_target        Into: target          
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+                Model Information
+
+Training Data Set              WORK.EM_DMREG.VIEW
+DMDB Catalog                   WORK.REG2_DMDB    
+Target Variable                target            
+Target Measurement Level       Nominal           
+Number of Target Categories    3                 
+Error                          MBernoulli        
+Link Function                  Logit             
+Number of Model Parameters     30                
+Number of Observations         91                
+
+
+          Target Profile
+ 
+ Ordered                    Total
+   Value     target     Frequency
+
+       1     sell              29
+       2     hold              24
+       3     buy               38
+
+
+
+
+Stepwise Selection Procedure
+
+
+Step 0: Intercepts entered.
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+Newton-Raphson Ridge Optimization
+
+Without Parameter Scaling
+
+Parameter Estimates               2
+
+                                             Optimization Start
+
+Active Constraints                                  0  Objective Function                       98.335070025
+Max Abs Gradient Element                 1.110223E-14                                                       
+
+                                            Optimization Results
+
+Iterations                                          0  Function Calls                                      3
+Hessian Calls                                       1  Active Constraints                                  0
+Objective Function                       98.335070025  Max Abs Gradient Element                 1.110223E-14
+Ridge                                               0  Actual Over Pred Change                             0
+
+Convergence criterion (ABSGCONV=0.00001) satisfied.                                               
+
+
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+
+    196.670         196.670         0.0000        0          .    
+
+
+
+
+                                           Analysis of Maximum Likelihood Estimates
+ 
+                                                               Standard          Wald                  Standardized
+Parameter                          target    DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+
+Intercept                          sell       1     -0.2703      0.2466          1.20        0.2730                       0.763
+Intercept                          hold       1     -0.4595      0.2607          3.11        0.0780                       0.632
+
+
+
+
+Step 1: Effect sentiment entered.
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+Newton-Raphson Ridge Optimization
+
+Without Parameter Scaling
+
+Parameter Estimates               6
+
+                                             Optimization Start
+
+Active Constraints                                  0  Objective Function                       98.335070025
+Max Abs Gradient Element                 11.868131868                                                       
+
+
+                                                                                                        Ratio
+                                                                                                      Between
+                                                                                                       Actual
+                                                                 Objective     Max Abs                    and
+                     Function         Active        Objective     Function    Gradient              Predicted
+Iter     Restarts       Calls    Constraints         Function       Change     Element     Ridge       Change
+
+   1            0           2              0         75.75669      22.5784      1.9883         0        1.028
+   2            0           3              0         74.02654       1.7302      0.5355         0        1.241
+   3            0           4              0         73.46779       0.5587      0.1875         0        1.259
+   4            0           5              0         73.26930       0.1985      0.0687         0        1.263
+   5            0           6              0         73.19717       0.0721      0.0252         0        1.264
+   6            0           7              0         73.17075       0.0264     0.00928         0        1.264
+   7            0           8              0         73.16105      0.00970     0.00341         0        1.264
+   8            0           9              0         73.15748      0.00357     0.00126         0        1.264
+   9            0          10              0         73.15617      0.00131    0.000462         0        1.264
+  10            0          11              0         73.15568     0.000483    0.000170         0        1.264
+  11            0          12              0         73.15551     0.000178    0.000063         0        1.264
+  12            0          13              0         73.15544     0.000065    0.000023         0        1.264
+
+                                            Optimization Results
+
+Iterations                                         12  Function Calls                                     15
+Hessian Calls                                      13  Active Constraints                                  0
+Objective Function                       73.155440486  Max Abs Gradient Element                 0.0000229972
+Ridge                                               0  Actual Over Pred Change                   1.264240564
+
+Convergence criterion (GCONV=1E-6) satisfied.                                                     
+
+
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+
+    196.670         146.311        50.3593        4         <.0001
+
+
+          Type 3 Analysis of Effects
+ 
+                            Wald
+Effect          DF    Chi-Square    Pr > ChiSq
+
+sentiment        4        3.2052        0.5241
+
+
+                                           Analysis of Maximum Likelihood Estimates
+ 
+                                                               Standard          Wald                  Standardized
+Parameter                          target    DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+
+Intercept                          sell       1     -3.8923     80.1870          0.00        0.9613                       0.020
+Intercept                          hold       1     -8.5888       158.3          0.00        0.9567                       0.000
+sentiment  -1                      sell       1      5.9717     80.1893          0.01        0.9406                     392.171
+sentiment  -1                      hold       1     -3.3656       277.3          0.00        0.9903                       0.035
+sentiment  0                       sell       1      3.9923     80.1872          0.00        0.9603                      54.182
+sentiment  0                       hold       1      8.8224       158.3          0.00        0.9555                     999.000
+
+
+                            Odds Ratio Estimates
+                                      
+                                                                        Point
+Effect                                                     target    Estimate
+
+sentiment  -1 vs 1                                         sell       999.000
+sentiment  -1 vs 1                                         hold         8.094
+sentiment  0 vs 1                                          sell       999.000
+sentiment  0 vs 1                                          hold       999.000
+
+
+Step 2: Effect sentiment removed.
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+
+The DMREG Procedure
+
+Newton-Raphson Ridge Optimization
+
+Without Parameter Scaling
+
+Parameter Estimates               2
+
+                                             Optimization Start
+
+Active Constraints                                  0  Objective Function                       98.335070025
+Max Abs Gradient Element                 1.110223E-14                                                       
+
+                                            Optimization Results
+
+Iterations                                          0  Function Calls                                      3
+Hessian Calls                                       1  Active Constraints                                  0
+Objective Function                       98.335070025  Max Abs Gradient Element                 1.110223E-14
+Ridge                                               0  Actual Over Pred Change                   1.264240564
+
+Convergence criterion (ABSGCONV=0.00001) satisfied.                                               
+
+
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+
+    196.670         196.670         0.0000        0          .    
+
+
+
+
+                                           Analysis of Maximum Likelihood Estimates
+ 
+                                                               Standard          Wald                  Standardized
+Parameter                          target    DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+
+Intercept                          sell       1     -0.2703      0.2466          1.20        0.2730                       0.763
+Intercept                          hold       1     -0.4595      0.2607          3.11        0.0780                       0.632
+
+
+
+
+NOTE: Model building terminates because the last effect entered is removed by the Wald test criterion.
+
+
+                                           Summary of Stepwise Selection
+ 
+                                                                                                         Validation
+                    Effect                    Number         Score          Wald                  Misclassification
+    Step    Entered      Removed        DF        In    Chi-Square    Chi-Square    Pr > ChiSq                 Rate
+
+       1    sentiment                    4         1       43.9406                      <.0001               0.5957
+       2                 sentiment       4         0                      3.2052        0.5241               0.5957
+
+
+The selected model, based on the misclassification rate for the validation data, is the model trained in Step 0. It consists of the following effects:
+
+Intercept  
+
+
+     Likelihood Ratio Test for Global Null Hypothesis: BETA=0
+ 
+     -2 Log Likelihood          Likelihood
+  Intercept     Intercept &          Ratio
+       Only      Covariates     Chi-Square       DF     Pr > ChiSq
+
+    196.670         196.670         0.0000        0          .    
+
+
+
+
+                                           Analysis of Maximum Likelihood Estimates
+ 
+                                                               Standard          Wald                  Standardized
+Parameter                          target    DF    Estimate       Error    Chi-Square    Pr > ChiSq        Estimate    Exp(Est)
+
+Intercept                          sell       1     -0.2703      0.2466          1.20        0.2730                       0.763
+Intercept                          hold       1     -0.4595      0.2607          3.11        0.0780                       0.632
+
+

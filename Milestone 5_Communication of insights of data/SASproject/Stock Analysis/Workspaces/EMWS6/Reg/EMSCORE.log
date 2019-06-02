@@ -1,0 +1,172 @@
+*------------------------------------------------------------*
+* Score Log
+Date:                May 29, 2019
+Time:                15:37:53
+*------------------------------------------------------------*
+11257  filename emflow "G:\SASproject\Stock Analysis\Workspaces\EMWS6\Reg\EMFLOWSCORE.sas";
+11258  *------------------------------------------------------------*;
+11259  * Reg: Scoring DATA data;
+11260  *------------------------------------------------------------*;
+11261  data EMWS6.Reg_TRAIN
+11262  / view=EMWS6.Reg_TRAIN
+11263  ;
+11264  set EMWS6.Impt_TRAIN
+11265  ;
+11266  %inc emflow;
+11542  run;
+
+NOTE: DATA STEP view saved on file EMWS6.REG_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS6.IMPT_TRAIN.VIEW used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.09 seconds
+      cpu time            0.09 seconds
+      
+
+11543  quit;
+11544  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+11545  filename emflow "G:\SASproject\Stock Analysis\Workspaces\EMWS6\Reg\EMFLOWSCORE.sas";
+11546  *------------------------------------------------------------*;
+11547  * Reg: Scoring VALIDATE data;
+11548  *------------------------------------------------------------*;
+11549  data EMWS6.Reg_VALIDATE
+11550  / view=EMWS6.Reg_VALIDATE
+11551  ;
+11552  set EMWS6.Impt_VALIDATE
+11553  ;
+11554  %inc emflow;
+11830  run;
+
+NOTE: DATA STEP view saved on file EMWS6.REG_VALIDATE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS6.IMPT_VALIDATE.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+11831  quit;
+11832  filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+
+11833  *------------------------------------------------------------*;
+11834  * Reg: Computing metadata for TRAIN data;
+11835  *------------------------------------------------------------*;
+
+NOTE: View EMWS6.REG_TRAIN.VIEW used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.06 seconds
+      
+12190  data WORK.MODELTEMP_INFO;
+12191  set EMWS6.Reg_EMINFO;
+12192  where DATA='Reg' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+12193  run;
+
+NOTE: There were 0 observations read from the data set EMWS6.REG_EMINFO.
+      WHERE (DATA='Reg') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12194  data EMWS6.Reg_EMINFO;
+12195  length TARGET KEY $32 DATA $43;
+12196  input TARGET KEY DATA $;
+12197  cards;
+
+NOTE: The data set EMWS6.REG_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12201  run;
+12202  data EMWS6.Reg_EMINFO;
+12203  set EMWS6.Reg_EMINFO WORK.MODELTEMP_INFO;
+12204  run;
+
+NOTE: There were 3 observations read from the data set EMWS6.REG_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS6.REG_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12205  proc sort data = EMWS6.Reg_EMINFO NOTHREADS;
+12206  by TARGET KEY;
+12207  run;
+
+NOTE: There were 3 observations read from the data set EMWS6.REG_EMINFO.
+NOTE: The data set EMWS6.REG_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12208  proc sort data = EMWS6.Ids3_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+12209  by TARGET KEY;
+12210  run;
+
+NOTE: There were 4 observations read from the data set EMWS6.IDS3_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 4 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12211  proc sort data = EMWS6.Reg_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+12212  by TARGET KEY;
+12213  run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS6.REG_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+12214  data EMWS6.Reg_EMINFO;
+12215  merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+12216  by TARGET KEY;
+12217  run;
+
+NOTE: There were 4 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS6.REG_EMINFO has 5 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+12218  proc datasets lib=work nolist;
+12219  delete TEMP_INFO SORTEDEMINFO;
+12220  run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+12221  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: View EMWS6.REG_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+NOTE: View EMWS6.REG_VALIDATE.VIEW used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      

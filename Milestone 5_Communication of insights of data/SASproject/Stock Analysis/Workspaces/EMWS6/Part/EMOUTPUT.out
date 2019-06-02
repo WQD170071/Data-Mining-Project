@@ -1,0 +1,77 @@
+*------------------------------------------------------------*
+User:                DM
+Date:                May 29, 2019
+Time:                15:33:00
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+            Measurement    Frequency
+Role           Level         Count
+ 
+INPUT        INTERVAL          6
+INPUT        NOMINAL           3
+REJECTED     INTERVAL          1
+TARGET       NOMINAL           1
+TIMEID       INTERVAL          1
+ 
+ 
+ 
+ 
+Partition Summary
+ 
+                                     Number of
+Type             Data Set          Observations
+ 
+DATA        EMWS6.Repl_TRAIN            185
+TRAIN       EMWS6.Part_TRAIN             91
+VALIDATE    EMWS6.Part_VALIDATE          94
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Summary Statistics for Class Targets
+ 
+Data=DATA
+ 
+            Numeric    Formatted    Frequency
+Variable     Value       Value        Count      Percent    Label
+ 
+ target        .         buy            76       41.0811
+ target        .         hold           50       27.0270
+ target        .         sell           59       31.8919
+ 
+ 
+Data=TRAIN
+ 
+            Numeric    Formatted    Frequency
+Variable     Value       Value        Count      Percent    Label
+ 
+ target        .         buy            38       41.7582
+ target        .         hold           24       26.3736
+ target        .         sell           29       31.8681
+ 
+ 
+Data=VALIDATE
+ 
+            Numeric    Formatted    Frequency
+Variable     Value       Value        Count      Percent    Label
+ 
+ target        .         buy            38       40.4255
+ target        .         hold           26       27.6596
+ target        .         sell           30       31.9149
