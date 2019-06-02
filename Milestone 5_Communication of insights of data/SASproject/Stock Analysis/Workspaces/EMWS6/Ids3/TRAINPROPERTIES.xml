@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?><_ROOT_  DataSource="cmodeltrain" Scope="LOCAL" Role="RAW" Library="AAEM141" Table="CMODEL_TRAIN"
+ NCols="11" NObs="185" NBytes="66560" Segment="" DataSourceRole="RAW" OutputType="VIEW"
+ ForceRun="N" ComputeStatistics="N" DataSelection="DATASOURCE" NewTable="" MetaAdvisor="BASIC"
+ ApplyIntervalLevelLowerLimit="Y" IntervalLowerLimit="20" ApplyMaxPercentMissing="Y"
+ MaxPercentMissing="50" ApplyMaxClassLevels="Y" MaxClassLevels="20" IdentifyEmptyColumns="Y"
+ VariableValidation="STRICT" NewVariableRole="REJECT" DropMapVariables="Y" DsId="cmodeltrain"
+ DsSampleName="" DsSampleSizeType="" DsSampleSize="" DsCreatedBy="DM" DsCreateDate="1874760139.9"
+ DsModifiedBy="DM" DsModifyDate="1874760140" DsScope="LOCAL" Sample="D" SampleSizeType="PERCENT"
+ SampleSizePercent="20" SampleSizeObs="10000" DBPassThrough="Y" RunAction="Train"
+ Component="DataSource" RawCreateTime="1874763069.5" CreateTime="29MAY2019:15:31:10"
+ Description="" Data="AAEM141.CMODEL_TRAIN" CMeta="WORK.M0IBEWBX" RunId="e3a6f57a-c870-43d9-bed8-7ce7d082d9ca"
+ RawLastTimeRun="1874763125.1" RawRunTime="16.476999998" LastTimeRun="29MAY2019:15:32:05"
+ RunTime="0 Hr. 0 Min. 16.48 Sec.">
+<VARIABLEPROPERTIES/>
+<FILEPROPERTIES/>
+</_ROOT_>
