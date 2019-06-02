@@ -1,0 +1,79 @@
+HOW TO GET TO CORRELATION ANALYSIS
+
+STEP 1:
+Combine 20 days stock data together into a single dataset
+
+STEP 2:
+Find out the missing values in the dataset
+
+STEP 3:
+Sort data by 'date'
+Groupby data by 'name'
+Calculate the percentage of stock price changed
+Save the calculated values to a new variable 'change'
+Save the data into a new dataset for the use of dimension reduction
+
+STEP 4:
+Filter each data with respect to its market
+- 5 markets : main market, ace market, bond&loan, etf, warrants
+- save it to different csv files
+
+STEP 5:
+Create pivot table for each of the sector in the dataset produced in STEP 4
+- Index : Date
+- Columns : Name
+- Values : Change
+
+STEP 6:
+Rename some term to shorten it and use for naming 
+- Warrants to W
+- Ace Market to AM
+- Main Market to MM
+- Bond & Loan to BL
+- Industrial Products & Services to IPS
+- Consumer Products & Services to CPS
+- Telecommunications & Media to TM
+- Transportation & Logistics to TL
+- Exchange Traded Fund to ETF
+- Real Estate Investment Trusts to REIT
+- Special Purpose Acquisition Company to SPAC
+- Financial Services to FS
+- Bond Islamic to BI
+- Closed End Fund to CEF
+
+Correlate between the percentage of stock price change of each company
+- except 'date'
+- set the decimal place to 5 decimal places
+
+STEP 7:
+Save all the correlation results into a single excel file with multiple sheets
+- name the sheets with market and sector name so that it can be recognized easily
+
+STEP 8:
+Interpret the correlation results
+- Values > 0.5 (dark blue)
+	- means the stocks are highly positively correlated
+- 0 < Values <= 0.5 (light blue)
+	- means the stocks are positively correlated
+- Values = 0 (yellow)
+	- means no correlation between stocks
+- -0.5 < Values < 0 (light red)
+	- means the stocks are negatively correlated
+- -1 < Values < -0.5 (dark red)
+	- means the stocks are highly negatively correlated
+- empty cell (light red without value)
+	- means there are NaN in the percentage of stock price changed data
+- Values = 1 (green)
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
