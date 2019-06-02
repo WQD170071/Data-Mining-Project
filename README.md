@@ -2,9 +2,9 @@
 
 Course: Data Mining - WQD7005
 
-"Dataset" folder contains dataset from Milestone 3-4.
+"Dataset" folder contains dataset from "Milestone 3-4". Star Schema is in "Milestone 2". 
 
-And the code to read .csv files in Milestone 3-4 are using GitHub files.
+And the code to read .csv files in "Milestone 3-4" are using GitHub files.
 
 Both Report and Slides are put inside the "Milestone 6_Provide recommendations" folder.
 
