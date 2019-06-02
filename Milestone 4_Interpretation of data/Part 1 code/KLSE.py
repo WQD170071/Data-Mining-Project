@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
 # Import packages
 import pandas as pd
 import numpy as np
@@ -10,9 +7,9 @@ import os
 
 # ### KLSE Indicator
 
-# Read in KLSE csv file 
-KLSE = pd.read_csv('klse_clean.csv')
-KLSE
+# Read in KLSE csv file
+KLSE = pd.read_csv('https://raw.githubusercontent.com/WQD170071/Data-Mining-Project/master/Dataset/Milestone%204/klse_clean.csv')
+# KLSE
 
 # Change variable type
 KLSE1 = KLSE.copy(deep=True)
@@ -31,26 +28,34 @@ def toString(x):
 co = KLSE1['code'].apply(toString)
 KLSE1['code'] = co
 
+def splitVal(x):
+    val = x.split(' ')[0]
+    if val == 'Oversold':
+        val = 1
+    if val == 'Neutral':
+        val = 0
+    if val == 'Overbought':
+        val = -1
+    return val
+rsi = KLSE1['RSI'].apply(splitVal)
+sto = KLSE1['Stochastic'].apply(splitVal)
+KLSE1['RSI'] = rsi
+KLSE1['Stochastic'] = sto
+
 KLSE1.info()
 
-# - ***Market Cap:*** It means how much all of the outstanding shares of a company is worth at the current market price.
-# 
 # - ***PE ratio (price-to-earnings ratio):*** It’s a financial measurement that investors can use to evaluate the future cash flows from an investment in relation to the value of the investment.
-# 
-# - ***PEG:*** Often called Price Earnings to Growth, is an investment calculation that measures the value of a stock based on the current earnings and the potential future growth of the company.
-# 
-#         PEG = PE / EPS
-# 
+
 # - ***DY:*** It shows what percentage of the stock’s market price is being paid back in the form of a dividend that year.
 
 # Change the variable name and calculate PEG
-KLSE2 = KLSE1[['full name','code','Sector_main','sector','P/E','EPS','DY','Market_Cap']]
-KLSE2 = KLSE2.rename(columns={'full name':'name','P/E':'PE','Market_Cap':'MC'})
-KLSE2['PEG'] = KLSE2.PE / KLSE2.EPS
-KLSE2 = KLSE2.drop(columns=['EPS'])
-KLSE2.head()
+KLSE2 = KLSE1[['full name','code','Sector_main','sector','ROE','P/E','EPS','DPS','DY','RSI','Stochastic']]
+KLSE2 = KLSE2.rename(columns={'full name':'name','P/E':'PE'})
+# KLSE2.head()
+
+KLSE3 = KLSE2[KLSE2['RSI']+KLSE2['Stochastic']>=0]
+KLSE3
 
 # Sort value in order to get the top stock simply base on their value
-KLSE_good = KLSE2.sort_values(by=['MC','PE','PEG','DY'],ascending=(False,True,True,False))
+KLSE_good = KLSE3.sort_values(by=['ROE','PE','EPS','DPS','DY'],ascending=(False,True,False,False,False))
 KLSE_good.head(50)
-
