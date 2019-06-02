@@ -1,0 +1,39 @@
+*------------------------------------------------------------*
+User:                DM
+Date:                May 29, 2019
+Time:                14:39:20
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          8
+INPUT      NOMINAL           1
+TARGET     NOMINAL           1
+TIMEID     INTERVAL          1
+ 
+ 
+ 
+Saved Data Properties
+ 
+ Data                                                        Total           Saved        Number of
+Library                  Output Location                  Observations    Observations    Variables
+ 
+AAEM141    G:\SASproject\Library\CModel_TRAIN.sas7bdat        185             MAX            11
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*

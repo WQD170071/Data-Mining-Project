@@ -1,0 +1,91 @@
+*------------------------------------------------------------*
+User:                DM
+Date:                May 29, 2019
+Time:                14:39:10
+*------------------------------------------------------------*
+* Training Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Variable Summary
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          8
+INPUT      NOMINAL           1
+TARGET     NOMINAL           1
+TIMEID     INTERVAL          1
+ 
+ 
+ 
+ 
+ 
+The CONTENTS Procedure
+ 
+Data Set Name        EMWS6.FIMPORT_DATA            Observations          185
+Member Type          DATA                          Variables             11
+Engine               V9                            Indexes               0
+Created              05/29/2019 14:39:07           Observation Length    96
+Last Modified        05/29/2019 14:39:07           Deleted Observations  0
+Protection                                         Compressed            NO
+Data Set Type                                      Sorted                NO
+Label
+Data Representation  WINDOWS_32
+Encoding             wlatin1  Western (Windows)
+ 
+ 
+                               Engine/Host Dependent Information
+ 
+Data Set Page Size          65536
+Number of Data Set Pages    1
+First Data Page             1
+Max Obs per Page            681
+Obs in First Data Page      185
+Number of Data Set Repairs  0
+ExtendObsCounter            YES
+Filename                    G:\SASproject\Stock Analysis\Workspaces\EMWS6\fimport_data.sas7bdat
+Release Created             9.0401M3
+Host Created                W32_8PRO
+ 
+ 
+       Alphabetic List of Variables and Attributes
+ 
+ #    Variable     Type    Len    Format       Informat
+ 
+ 9    change       Num       8    BEST12.      BEST32.
+ 2    code         Num       8    BEST12.      BEST32.
+ 3    date         Num       8    YYMMDD10.    YYMMDD10.
+ 6    high         Num       8    BEST12.      BEST32.
+ 5    low          Num       8    BEST12.      BEST32.
+ 1    name         Char     20    $20.         $20.
+ 4    open         Num       8    BEST12.      BEST32.
+ 7    price        Num       8    BEST12.      BEST32.
+10    sentiment    Num       8    BEST12.      BEST32.
+11    target       Char      4    $4.          $4.
+ 8    volume       Num       8    BEST12.      BEST32.
+
+
+*------------------------------------------------------------*
+* Score Output
+*------------------------------------------------------------*
+
+
+*------------------------------------------------------------*
+* Report Output
+*------------------------------------------------------------*
+ 
+ 
+ 
+ 
+Exported Attributes for TRAIN Port
+ 
+          Measurement    Frequency
+ Role        Level         Count
+ 
+INPUT      INTERVAL          8
+INPUT      NOMINAL           1
+TARGET     NOMINAL           1
+TIMEID     INTERVAL          1
