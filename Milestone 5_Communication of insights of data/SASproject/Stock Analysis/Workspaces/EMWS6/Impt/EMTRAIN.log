@@ -1,0 +1,310 @@
+*------------------------------------------------------------*
+* Training Log
+Date:                May 29, 2019
+Time:                15:37:29
+*------------------------------------------------------------*
+10866  proc freq data=EMWS6.Impt_VariableSet noprint;
+10867  table ROLE*LEVEL/out=WORK.ImptMETA;
+10868  run;
+
+NOTE: There were 11 observations read from the data set EMWS6.IMPT_VARIABLESET.
+NOTE: The data set WORK.IMPTMETA has 4 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10869  proc print data=WORK.ImptMETA label noobs;
+10870  var ROLE LEVEL COUNT;
+10871  label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL = "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT = "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+10872  title9 ' ';
+10873  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+10874  run;
+
+NOTE: There were 4 observations read from the data set WORK.IMPTMETA.
+NOTE: The PROCEDURE PRINT printed page 1.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10875  title10;
+
+10893  data WORK.Impt_TREEINPUTS;
+10894  set WORK.M1P29_QX;
+10895  if ROLE ne 'FREQ' then do;
+10896  if ((ROLE in('TARGET','REJECTED') and useTree='D') or useTree='N') then delete;
+10897  ROLE = 'INPUT';
+10898  end;
+10899  run;
+
+NOTE: There were 10 observations read from the data set WORK.M1P29_QX.
+NOTE: The data set WORK.IMPT_TREEINPUTS has 9 observations and 23 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+10900  data WORK.M1P29_QX;
+10901  set WORK.M1P29_QX;
+10902  if METHOD in("TREE", "TREESURR") then role = 'TARGET';
+10903  else if (role = 'REJECTED') then role = 'INPUT';
+10904  run;
+
+NOTE: There were 10 observations read from the data set WORK.M1P29_QX.
+NOTE: The data set WORK.M1P29_QX has 10 observations and 23 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+10905  *------------------------------------------------------------* ;
+10906  * Impt: DMDBClass Macro ;
+10907  *------------------------------------------------------------* ;
+10908  %macro DMDBClass;
+10909      code(ASC) name(ASC) sentiment(ASC) target(DESC)
+10910  %mend DMDBClass;
+10911  *------------------------------------------------------------* ;
+10912  * Impt: DMDBVar Macro ;
+10913  *------------------------------------------------------------* ;
+10914  %macro DMDBVar;
+10915      LOG_high LOG_low LOG_open LOG_price REP_volume change
+10916  %mend DMDBVar;
+10917  *------------------------------------------------------------*;
+10918  * Impt: Create DMDB;
+10919  *------------------------------------------------------------*;
+10920  proc dmdb batch data=EMWS6.Trans_TRAIN
+10921  dmdbcat=WORK.Impt_DMDB
+10922  classout=WORK.Impt_DMDBCLASSOUT
+10923  varout=WORK.IMPUTE_0W995PV_DMDBVAROUT
+10924  maxlevel = 513
+10925  ;
+10926  class %DMDBClass;
+10927  var %DMDBVar;
+10928  target
+10929  target
+10930  ;
+10931  run;
+
+NOTE: Records processed = 91   Memory used = 511K.
+NOTE: View EMWS6.TRANS_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+NOTE: There were 91 observations read from the data set EMWS6.PART_TRAIN.
+NOTE: There were 91 observations read from the data set EMWS6.TRANS_TRAIN.
+NOTE: The data set WORK.IMPT_DMDBCLASSOUT has 14 observations and 9 variables.
+NOTE: The data set WORK.IMPUTE_0W995PV_DMDBVAROUT has 6 observations and 9 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+10932  quit;
+10933  *--- end code ---*;
+
+10934  proc sort data=WORK.Impt_DMDBCLASSOUT;
+10935  by NAME;
+10936  run;
+
+NOTE: There were 14 observations read from the data set WORK.IMPT_DMDBCLASSOUT.
+NOTE: The data set WORK.IMPT_DMDBCLASSOUT has 14 observations and 9 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10937  data WORK.Impt_DMDBCLASSOUT;
+10938  retain missFlag;
+10939  set WORK.Impt_DMDBCLASSOUT;
+10940  by NAME;
+10941  output;
+10942  if first.name then missflag = 0;
+10943  if (TYPE='C' and CRAW='') or (TYPE='N' and NRAW=.) then missflag = 1;
+10944  if last.name and ^missFlag then do;
+10945  if type = 'C' then do;
+10946  LEVEL= '';
+10947  CRAW = '';
+10948  NRAW = .;
+10949  end;
+10950  else do;
+10951  LEVEL='.';
+10952  CRAW = '.';
+10953  NRAW= .;
+10954  end;
+10955  FREQUENCY = 0;
+10956  FREQPERCENT = 0;
+10957  NMISSPERCENT = 0;
+10958  output;
+10959  end;
+10960  run;
+
+NOTE: There were 14 observations read from the data set WORK.IMPT_DMDBCLASSOUT.
+NOTE: The data set WORK.IMPT_DMDBCLASSOUT has 18 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10961  data WORK.Impt_MISS(KEEP=NAME NMISS PERCENTMISS);
+10962  length NAME $32;
+10963  set
+10964  WORK.Impt_DMDBCLASSOUT(rename=(freqpercent=PERCENTMISS frequency=NMISS) where=((TYPE='C' and CRAW='') or (TYPE='N' and NRAW=.)))
+10965  WORK.IMPUTE_0W995PV_DMDBVAROUT
+10966  ;
+10967  if (NMISS ne . and N ne .) then PERCENTMISS = (NMISS/(NMISS+N))*100;
+10968  run;
+
+NOTE: There were 4 observations read from the data set WORK.IMPT_DMDBCLASSOUT.
+      WHERE ((TYPE='C') and (CRAW=' ')) or ((TYPE='N') and (NRAW=.));
+NOTE: There were 6 observations read from the data set WORK.IMPUTE_0W995PV_DMDBVAROUT.
+NOTE: The data set WORK.IMPT_MISS has 10 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10969  proc sort data=WORK.M3T475L9 NOTHREADS;
+10970  by NAME;
+10971  run;
+
+NOTE: There were 10 observations read from the data set WORK.M3T475L9.
+NOTE: The data set WORK.M3T475L9 has 10 observations and 23 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10972  proc sort data=WORK.Impt_MISS NOTHREADS;
+10973  by NAME;
+10974  run;
+
+NOTE: There were 10 observations read from the data set WORK.IMPT_MISS.
+NOTE: The data set WORK.IMPT_MISS has 10 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10975  data WORK.M3T475L9;
+10976  merge WORK.M3T475L9 WORK.Impt_MISS(in=_b);
+10977  by NAME;
+10978  if _b then output;
+10979  run;
+
+NOTE: There were 10 observations read from the data set WORK.M3T475L9.
+NOTE: There were 10 observations read from the data set WORK.IMPT_MISS.
+NOTE: The data set WORK.M3T475L9 has 10 observations and 25 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+10980  data WORK.M3T475L9;
+10981  set WORK.M3T475L9;
+10982  if 0<PERCENTMISS<50 and method ne 'NONE' then IMPUTE = 1;
+10983  else IMPUTE = 0;
+10984  run;
+
+NOTE: There were 10 observations read from the data set WORK.M3T475L9.
+NOTE: The data set WORK.M3T475L9 has 10 observations and 26 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+10985  proc dmdb data=WORK.M3T475L9 outtable=WORK.NEWNAMES nameserver;
+10986  names NAME;
+10987  prefix M_ IMP_;
+10988  where IMPUTE=1;
+10989  run;
+
+NOTE: There were 0 observations read from the data set WORK.M3T475L9.
+      WHERE IMPUTE=1;
+NOTE: The data set WORK.NEWNAMES has 0 observations and 3 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+10990  data WORK.M3T475L9;
+10991  merge WORK.M3T475L9 WORK.NEWNAMES;
+10992  by NAME;
+10993  run;
+
+NOTE: There were 10 observations read from the data set WORK.M3T475L9.
+NOTE: There were 0 observations read from the data set WORK.NEWNAMES.
+NOTE: The data set WORK.M3T475L9 has 10 observations and 28 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+10994  proc dmdb data=WORK.M3T475L9 outtable=WORK.NEWNAMES nameserver;
+10995  names NAME;
+10996  prefix M_;
+10997  where IMPUTE=0;
+10998  run;
+
+NOTE: There were 10 observations read from the data set WORK.M3T475L9.
+      WHERE IMPUTE=0;
+NOTE: The data set WORK.NEWNAMES has 10 observations and 2 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+10999  data WORK.M3T475L9;
+11000  merge WORK.M3T475L9 WORK.NEWNAMES;
+11001  by NAME;
+11002  run;
+
+NOTE: There were 10 observations read from the data set WORK.M3T475L9.
+NOTE: There were 10 observations read from the data set WORK.NEWNAMES.
+NOTE: The data set WORK.M3T475L9 has 10 observations and 28 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+
+11003  data WORK.Impt;
+11004  run;
+
+NOTE: The data set WORK.IMPT has 1 observations and 0 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+NOTE: View EMWS6.TRANS_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+11005  data EMWS6.Impt_META;
+11006  set WORK.M3T475L9;
+11007  VALUE = .;
+11008  run;
+
+NOTE: There were 10 observations read from the data set WORK.M3T475L9.
+NOTE: The data set EMWS6.IMPT_META has 10 observations and 29 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11009  proc print data=EMWS6.Impt_META(obs=500) label noobs;
+11010  label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel,          NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel,         NOQUOTE))" PERCENTMISS = "%sysfunc(sasmsg(sashelp.dmine, rpt_percentmissing_vlabel, NOQUOTE))";
+11011  var NAME LABEL PERCENTMISS;
+11012  where IMP eq '' and PERCENTMISS>50;
+11013  title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_rejectedsummary_title, NOQUOTE))";
+11014  title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_numberobs_title,         NOQUOTE))";
+11015  run;
+
+NOTE: No observations were selected from data set EMWS6.IMPT_META.
+NOTE: There were 0 observations read from the data set EMWS6.IMPT_META.
+      WHERE (IMP=' ') and (PERCENTMISS>50);
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+

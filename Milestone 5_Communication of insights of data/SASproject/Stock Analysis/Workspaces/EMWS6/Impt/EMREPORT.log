@@ -1,0 +1,47 @@
+*------------------------------------------------------------*
+* Report Log
+Date:                May 29, 2019
+Time:                15:37:31
+*------------------------------------------------------------*
+11613  %let _nimpute = 0;
+11614  data EMWS6.Impt_RESULT;
+11615  label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel,        NOQUOTE))" METHOD = "%sysfunc(sasmsg(sashelp.dmine, rpt_imputemethod_vlabel, NOQUOTE))" IMPUTED = "%sysfunc(sasmsg(sashelp.dmine, rpt_imputedvar_vlabel,   NOQUOTE))" INDICATOR =
+11616     "%sysfunc(sasmsg(sashelp.dmine, rpt_indicatorvar_vlabel, NOQUOTE))" VALUE = "%sysfunc(sasmsg(sashelp.dmine, rpt_imputevalue_vlabel,  NOQUOTE))" ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel,        NOQUOTE))" LEVEL =
+11617     "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel,       NOQUOTE))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel,       NOQUOTE))" TRAIN = "%sysfunc(sasmsg(sashelp.dmine, rpt_missingcount_vlabel, NOQUOTE, TRAIN))";
+11618  set EMWS6.Impt_META(where=(IMPUTED ne '') keep=NAME METHOD IMP M VALUE ROLE NMISS LEVEL LABEL rename=(IMP=IMPUTED M=INDICATOR NMISS=TRAIN)) end=eof;
+11619  if eof then call symput('_nimpute', '1');
+11620  run;
+
+NOTE: There were 0 observations read from the data set EMWS6.IMPT_META.
+      WHERE IMPUTED not = ' ';
+NOTE: The data set EMWS6.IMPT_RESULT has 0 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+11621  data EMWS6.Impt_EMSCOREVAR;
+11622  length Name $32 formula $70 file $200;
+11623  keep NAME Formula file;
+11624  set EMWS6.Impt_META end=eof;
+11625  *set EMWS6.Impt_RESULT end=eof;
+11626  if M ne '' then do;
+11627  NAME= M;
+11628  file="IMPUTECODE\"!!strip(NAME)!!'.sas';
+11629  output;
+11630  end;
+11631  if IMP ne '' then do;
+11632  NAME= IMP;
+11633  file="IMPUTECODE\"!!strip(NAME)!!'.sas';
+11634  output;
+11635  end;
+11636  run;
+
+NOTE: Variable formula is uninitialized.
+NOTE: There were 10 observations read from the data set EMWS6.IMPT_META.
+NOTE: The data set EMWS6.IMPT_EMSCOREVAR has 10 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+

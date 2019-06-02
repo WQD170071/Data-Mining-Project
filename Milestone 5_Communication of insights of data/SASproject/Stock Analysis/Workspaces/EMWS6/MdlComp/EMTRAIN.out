@@ -1,0 +1,209 @@
+ 
+                                                                                                                                                                                                                                                                
+ 
+ 
+Variable Summary
+
+          Measurement    Frequency
+ Role        Level         Count
+
+TARGET      NOMINAL          1    
+ 
+                                                                                               
+ 
+ 
+
+
+
+
+
+
+
+Fit Statistics
+Model Selection based on Valid: Misclassification Rate (_VMISC_)
+
+                                                        Train:                      Valid:
+                                          Valid:       Average        Train:       Average
+Selected  Model                     Misclassification  Squared  Misclassification  Squared
+ Model    Node   Model Description         Rate         Error          Rate         Error
+
+   Y      Tree2  Decision Tree (2)       0.05319       0.03924       0.06593       0.03219
+          Tree3  Probability Tree        0.05319       0.03924       0.06593       0.03219
+          Tree   Maximal Tree            0.08511       0.02520       0.04396       0.03701
+          Reg    Regression              0.13830       0.00000       0.00000       0.08430
+          Reg2   Stepwise                0.59574       0.21817       0.58242       0.21952
+ 
+                                                                                               
+ 
+ 
+
+
+
+
+
+
+
+Fit Statistics Table
+Target: target
+
+Data Role=Train
+
+Statistics
+
+Train: Bin-Based Two-Way Kolmogorov-Smirnov Probability Cutoff
+Train: Kolmogorov-Smirnov Statistic                           
+Train: Akaike's Information Criterion                         
+Train: Average Squared Error                                  
+Train: Roc Index                                              
+Train: Average Error Function                                 
+Train: Cumulative Percent Captured Response                   
+Train: Percent Captured Response                              
+Selection Criterion: Valid: Misclassification Rate            
+Train: Degrees of Freedom for Error                           
+Train: Model Degrees of Freedom                               
+Train: Total Degrees of Freedom                               
+Train: Divisor for ASE                                        
+Train: Error Function                                         
+Train: Final Prediction Error                                 
+Train: Gain                                                   
+Train: Gini Coefficient                                       
+Train: Bin-Based Two-Way Kolmogorov-Smirnov Statistic         
+Train: Kolmogorov-Smirnov Probability Cutoff                  
+Train: Cumulative Lift                                        
+Train: Lift                                                   
+Train: Maximum Absolute Error                                 
+Train: Misclassification Rate                                 
+Train: Mean Square Error                                      
+Train: Sum of Frequencies                                     
+Train: Number of Estimate Weights                             
+Train: Root Average Squared Error                             
+Train: Cumulative Percent Response                            
+Train: Percent Response                                       
+Train: Root Final Prediction Error                            
+Train: Root Mean Squared Error                                
+Train: Schwarz's Bayesian Criterion                           
+Train: Sum of Squared Errors                                  
+Train: Sum of Case Weights Times Freq                         
+
+  Tree2      Tree3       Tree        Reg       Reg2
+
+  0.897      0.897      0.823      0.999      0.000
+  0.848      0.848      0.935      1.000      0.000
+   .          .          .        48.107    200.670
+  0.039      0.039      0.025      0.000      0.218
+  0.953      0.953      0.972      1.000      0.500
+   .          .          .         0.000      0.720
+ 30.916     30.916     30.916     34.483     10.989
+ 15.458     15.458     15.458     17.241      5.495
+  0.053      0.053      0.085      0.138      0.596
+   .          .          .       158.000    180.000
+   .          .          .        24.000      2.000
+182.000    182.000    182.000    182.000    182.000
+273.000    273.000    273.000    273.000    273.000
+   .          .          .         0.107    196.670
+   .          .          .         0.000      0.223
+181.332    181.332    181.332    213.793      0.000
+  0.907      0.907      0.945      1.000      0.000
+  0.819      0.819      0.914      0.966      0.000
+  0.120      0.120      0.010      0.010       .   
+  2.813      2.813      2.813      3.138      1.000
+  2.813      2.813      2.813      3.138      1.000
+  0.897      0.897      0.897      0.011      0.736
+  0.066      0.066      0.044      0.000      0.582
+   .          .          .         0.000      0.221
+ 91.000     91.000     91.000     91.000     91.000
+   .          .          .        24.000      2.000
+  0.198      0.198      0.159      0.002      0.467
+ 89.655     89.655     89.655    100.000     31.868
+ 89.655     89.655     89.655    100.000     31.868
+   .          .          .         0.002      0.472
+   .          .          .         0.002      0.470
+   .          .          .       125.003    207.078
+ 10.713     10.713      6.879      0.001     59.560
+   .          .          .       273.000    273.000
+
+
+Data Role=Valid
+
+Statistics
+
+Valid: Kolmogorov-Smirnov Statistic                           
+Valid: Average Squared Error                                  
+Valid: Roc Index                                              
+Valid: Average Error Function                                 
+Valid: Bin-Based Two-Way Kolmogorov-Smirnov Probability Cutoff
+Valid: Cumulative Percent Captured Response                   
+Valid: Percent Captured Response                              
+Valid: Divisor for VASE                                       
+Valid: Error Function                                         
+Valid: Gain                                                   
+Valid: Gini Coefficient                                       
+Valid: Bin-Based Two-Way Kolmogorov-Smirnov Statistic         
+Valid: Kolmogorov-Smirnov Probability Cutoff                  
+Valid: Cumulative Lift                                        
+Valid: Lift                                                   
+Valid: Maximum Absolute Error                                 
+Valid: Misclassification Rate                                 
+Valid: Mean Square Error                                      
+Valid: Sum of Frequencies                                     
+Valid: Root Average Squared Error                             
+Valid: Cumulative Percent Response                            
+Valid: Percent Response                                       
+Valid: Root Mean Square Error                                 
+Valid: Sum of Squared Errors                                  
+Valid: Sum of Case Weights Times Freq                         
+
+  Tree2      Tree3       Tree        Reg       Reg2
+
+  0.833      0.833      0.884      0.984      0.000
+  0.032      0.032      0.037      0.084      0.220
+  0.966      0.966      0.986      0.997      0.500
+   .          .          .         0.730      0.724
+  0.504      0.504      0.823      0.270      0.000
+ 33.333     33.333     32.143     33.333     10.638
+ 16.667     16.667     16.071     16.667      5.319
+282.000    282.000    282.000    282.000    282.000
+   .          .          .       205.968    204.288
+213.333    213.333    202.143    213.333      0.000
+  0.932      0.932      0.972      0.994      0.000
+  0.802      0.802      0.883      0.953      0.000
+  0.120      0.120      0.760      0.010       .   
+  3.133      3.133      3.021      3.133      1.000
+  3.133      3.133      3.021      3.133      1.000
+  0.889      0.889      0.897      1.000      0.736
+  0.053      0.053      0.085      0.138      0.596
+   .          .          .         0.084      0.220
+ 94.000     94.000     94.000     94.000     94.000
+  0.179      0.179      0.192      0.290      0.469
+100.000    100.000     96.429    100.000     31.915
+100.000    100.000     96.429    100.000     31.915
+   .          .          .         0.290      0.469
+  9.078      9.078     10.435     23.773     61.905
+   .          .          .       282.000    282.000
+ 
+                                                                                               
+ 
+ 
+
+
+
+
+
+
+
+Event Classification Table
+Model Selection based on Valid: Misclassification Rate (_VMISC_)
+
+Model                     Data              Target    False     True      False     True
+Node   Model Description  Role      Target  Label   Negative  Negative  Positive  Positive
+
+Tree2  Decision Tree (2)  TRAIN     target              3        59         3        26   
+Tree2  Decision Tree (2)  VALIDATE  target              5        64         .        25   
+Reg2   Stepwise           TRAIN     target             29        62         0         0   
+Reg2   Stepwise           VALIDATE  target             30        64         0         0   
+Tree3  Probability Tree   TRAIN     target              3        59         3        26   
+Tree3  Probability Tree   VALIDATE  target              5        64         .        25   
+Reg    Regression         TRAIN     target              .        62         .        29   
+Reg    Regression         VALIDATE  target              1        63         1        29   
+Tree   Maximal Tree       TRAIN     target              0        58         4        29   
+Tree   Maximal Tree       VALIDATE  target              0        56         8        30   
